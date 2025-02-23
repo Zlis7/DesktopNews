@@ -1,0 +1,47 @@
+.infoCard{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.infoAuthor{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.minCardNews{
+    width: 32%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    margin-top: 35px;
+}
+
+.maxCardNews{
+    display: flex;
+    gap: 30px;
+}
+
+.darkishText, .lightishText{
+    display: -webkit-box;
+    -webkit-line-clamp: 7; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.darkishText{
+    max-height: 200px;
+    max-width: 600px;
+    color:rgb(255, 255, 255, 0.6);
+}
+
+.lightishText{
+    max-height: 100px;
+    color:rgb(255, 255, 255, 0.87);
+}
+
+.infoAuthor .lightishText{
+    max-width: 200px;
+}

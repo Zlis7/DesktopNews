@@ -1,0 +1,10 @@
+.homeNews{
+    display: flex;
+    flex-direction: column;
+}
+
+.containerNews{
+    display: flex;
+    gap: 2%;
+    flex-wrap: wrap;
+}

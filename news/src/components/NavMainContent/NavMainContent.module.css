@@ -1,0 +1,13 @@
+.li{
+    list-style-type: none;
+}
+
+.navLink{
+    color:rgb(255, 255, 255, 0.87);
+    text-decoration: none;
+}
+
+.ul{
+    display: flex;
+    gap: 40px;
+}

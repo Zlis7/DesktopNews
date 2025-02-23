@@ -1,0 +1,22 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.label{
+
+}
+
+.input{
+    width: 200px;
+    height: 25px;
+    background-color: #4B5563;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+.submit{
+    width: 200px;
+}
