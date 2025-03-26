@@ -5,6 +5,12 @@
 .navLink{
     color:rgb(255, 255, 255, 0.87);
     text-decoration: none;
+    transition: 1.2s;
+}
+
+.navLink:hover{
+    font-size: 20px;
+    border-bottom: 1px solid rgb(255, 255, 255, 0.87);
 }
 
 .ul{

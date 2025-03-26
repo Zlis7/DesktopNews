@@ -18,6 +18,8 @@ const createWindow = () => {
 
   mainWindow.setMenuBarVisibility(false);
 
+  //'http://localhost:5173'
+  //https://rutube.ru/
   mainWindow.loadURL('http://localhost:5173');
 
   // and load the index.html of the app.

@@ -5,7 +5,7 @@
 }
 
 .label{
-
+    color:white;
 }
 
 .input{
@@ -15,8 +15,17 @@
     border: none;
     outline: none;
     margin-bottom: 15px;
+    color:white;
+    padding-left: 10px;
+}
+
+.select{
+    width: 209px;
 }
 
 .submit{
-    width: 200px;
+    width: 209px;
+    height: 25px;
+    background-color: white;
 }
+
