@@ -6,7 +6,8 @@ export default function Account(){
     name: '',
     email: '',
     password: '',
-    rights: 'user'
+    rights: 'user',
+    phone:''
   });
 
   const handleChange = (e) => {
@@ -20,7 +21,7 @@ export default function Account(){
   const handleSubmit = async (e) =>{
     e.preventDefault();
 
-    const response = await fetch('http://localhost:3000/api/hello', {
+    const response = await fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -41,6 +42,8 @@ export default function Account(){
         <input className={classes.input} onChange={handleChange} name='email' type='email' required/>
         <label className={classes.label}>Пароль:</label>
         <input className={classes.input} onChange={handleChange} name='password' type='password'  minLength={8} maxLength={30} required/>
+        <label className={classes.label} >Номер телефона:</label>
+        <input className={classes.input} onChange={handleChange} name='phone' type='tel'  minLength={11} maxLength={12} required/>
         <label className={classes.label} >Права аккаунта:</label>
         <select className={`${classes.input} ${classes.select}`} onChange={handleChange} name='rights'>
           <option className={classes.label} value='user'>Пользователь</option>
