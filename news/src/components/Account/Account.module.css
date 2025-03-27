@@ -1,5 +1,6 @@
 .h1{
     color:white;
+    margin-bottom: 15px;
 }
 
 .article{
@@ -22,7 +23,7 @@
     flex-direction: column;
 }
 
-.createNews{
+.optionProfile{
     display: flex;
     color:#9cadc2;
     border:1px solid #00000000;
@@ -30,4 +31,10 @@
     font-size: 17px;
     height: 25px;
     cursor: pointer;
+}
+
+.userImage{
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
 }

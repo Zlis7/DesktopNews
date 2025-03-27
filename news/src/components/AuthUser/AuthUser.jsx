@@ -1,19 +1,29 @@
 import classes from './AuthUser.module.css';
 import Account from '../Account/Account';
 import { useState } from 'react';
+import { auth, analytics } from '../../firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { setUserProperties } from "firebase/analytics";
 
 export default function AuthUser(){
   const [userDataForm, setUserDataForm] = useState({
-    uid: '',
     name: '',
     email: '',
     password: '',
+    password2: '',
+    photoURL: '',
     role: 'user'
   });
 
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-  const savedUserData = localStorage.getItem('userData');
+
+  const currentUser = auth.currentUser;
+
+  const handleClickChangeForm = () => {
+    setErrorMessage('');
+    setIsLogin(!isLogin);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,34 +33,50 @@ export default function AuthUser(){
     });
   };
 
-  const handleSubmit = async (e) =>{
+  const handleSubmitLogin = async(e) =>{
     e.preventDefault();
-    
-    const pathResponce = isLogin ? 'login' : 'registration';
-    
-    await fetch(`http://localhost:3000/${pathResponce}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userDataForm),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      setUserDataForm(data);
-      localStorage.setItem('userData', data);
-      location.reload();
-    })
-    .catch((error) => {setErrorMessage(error)});
-  }
+    setErrorMessage('')
 
-  const handleClickChangeForm = (e) => {
-    setIsLogin(!isLogin);
+    await signInWithEmailAndPassword(
+      auth, 
+      userDataForm.email, 
+      userDataForm.password
+    )
+    .then(()=>{window.location.reload()})
+    .catch((error)=> setErrorMessage(error.message));
+  };
+
+  const handleSubmitRegistration = async(e) =>{
+    e.preventDefault();
+
+    if (userDataForm.password != userDataForm.password2){
+      setErrorMessage('Пароли не совпадают!');
+      return;
+
+    } else{
+      setErrorMessage('');
+    }
+    
+    await createUserWithEmailAndPassword(
+      auth, 
+      userDataForm.email, 
+      userDataForm.password
+
+    ).then((userCredential)=>{
+        updateProfile(userCredential.user, {
+          displayName: userDataForm.name,
+          photoURL: userDataForm.photoURL
+        });
+        setUserProperties(analytics, {
+          role: 'user'
+        })
+        window.location.href = '#/account';
+    }).catch((error)=> setErrorMessage(error.message));
   };
 
   const loginForm = () => {
     return(
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleSubmitLogin}>
         <label className={classes.label}>Почта:</label>
         <input className={classes.input} onChange={handleChange} name='email' type='email' required/>
         <label className={classes.label}>Пароль:</label>
@@ -63,17 +89,17 @@ export default function AuthUser(){
 
   const registrationForm = () => {
     return(
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleSubmitRegistration}>
         <label className={classes.label} htmlFor='name'>Псевдоним:</label>
         <input className={classes.input} onChange={handleChange} name='name' type='text' minLength={8} maxLength={15} required/>
         <label className={classes.label} htmlFor='email'>Почта:</label>
         <input className={classes.input} onChange={handleChange} name='email' type='email' required/>
-        <label className={classes.label} htmlFor='password1'>Пароль:</label>
-        <input className={classes.input} onChange={handleChange} name='password1' type='password'  minLength={8} maxLength={30} required/>
+        <label className={classes.label} htmlFor='password'>Пароль:</label>
+        <input className={classes.input} onChange={handleChange} name='password' type='password'  minLength={8} maxLength={30} required/>
         <label className={classes.label} htmlFor='password2'>Повторите пароль:</label>
         <input className={classes.input} onChange={handleChange} name='password2' type='password'  minLength={8} maxLength={30} required/>
-        <label className={classes.label} htmlFor='url-image'>URL фото профиля:</label>
-        <input className={classes.input} onChange={handleChange} name='url-image' type='text' required/>
+        <label className={classes.label} htmlFor='photoURL'>URL фото профиля:</label>
+        <input className={classes.input} onChange={handleChange} name='photoURL' type='text' required/>
         
         <button className={classes.submit} type='submit'>Зарегистрироваться</button>
       </form>
@@ -93,7 +119,7 @@ export default function AuthUser(){
         }
 
         {
-          errorMessage.length != 0 ?
+          errorMessage.length > 0 ?
           (<p className={classes.errorMessage}>{errorMessage}</p>) :
           undefined
         }
@@ -104,8 +130,8 @@ export default function AuthUser(){
   return (
     <>
       {
-        savedUserData != undefined ?
-        (<Account userData={JSON.parse(savedUserData)} />) :
+        currentUser ?
+        (<Account displayName={currentUser.displayName} userImage={currentUser.photoURL} userInfo={currentUser.reloadUserInfo} />) :
         (showForm())
       }
     </>
