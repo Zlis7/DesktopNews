@@ -13,6 +13,8 @@ export default function App(){
           <Route path='homeAll' element={<Main path='homeAll' />} />
           <Route path='homeApp' element={<Main path='homeApp' />}  />
           <Route path='account' element={<Main path='account' />}  />
+          <Route path='createNews' element={<Main path='createNews' />}  />
+          <Route path='adminPanel' element={<Main path='adminPanel' />}  />
         </Routes>
       </HashRouter>
     </>

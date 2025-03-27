@@ -1,0 +1,62 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.label{
+    color:white;
+}
+
+.input{
+    width: 200px;
+    height: 25px;
+    background-color: #4B5563;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+    color:white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.select{
+    width: 200px;
+}
+
+.changeForm{
+    display: flex;
+    color:#555f6d;
+    border:1px solid #00000000;
+    background: none;
+    font-size: 17px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.changeForm:hover{
+    border-bottom: 1px solid #79889c;
+}
+
+.submit{
+    width: 209px;
+    height: 25px;
+    background-color: white;
+}
+
+.titleForm{
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
+.errorMessage{
+    font-size: 17px;
+    color:#ff6363;
+    width: 400px;
+    height: 200px;
+    overflow: auto;
+}
+

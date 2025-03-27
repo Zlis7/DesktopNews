@@ -2,7 +2,11 @@ import classes from './CardNews.module.css';
 
 export default function CardNews({isMinCardNews, dataNews}){
   return (
-    <div className={isMinCardNews ? classes.minCardNews : classes.maxCardNews}>
+    <div className={
+      isMinCardNews ? 
+      classes.minCardNews : classes.maxCardNews}
+      >
+
       <img src="images/temp.svg" alt="imageNews" />
       <div className={classes.infoCard}>
         <p className={classes.darkishText}> {dataNews.date} </p>

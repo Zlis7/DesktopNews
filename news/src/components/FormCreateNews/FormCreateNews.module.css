@@ -1,0 +1,45 @@
+.form{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.label{
+    color:white;
+}
+
+.input{
+    width: 200px;
+    height: 25px;
+    background-color: #4B5563;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+    color:white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.inputBig{
+    min-width: 500px;
+    min-height: 300px;
+    max-width: 800px;
+    max-height: 800px;
+    padding: 10px; 
+}
+
+.inputBig::-webkit-scrollbar {
+    direction: rtl;
+}
+
+.select{
+    width: 200px;
+}
+
+.submit{
+    width: 209px;
+    height: 25px;
+    background-color: white;
+}

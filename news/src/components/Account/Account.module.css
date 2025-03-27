@@ -1,31 +1,33 @@
-.form{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.label{
+.h1{
     color:white;
 }
 
-.input{
-    width: 200px;
-    height: 25px;
-    background-color: #4B5563;
-    border: none;
-    outline: none;
+.article{
+    color:#9cadc2;
     margin-bottom: 15px;
-    color:white;
-    padding-left: 10px;
 }
 
-.select{
-    width: 209px;
+.article h3{
+    margin-top: 15px;
+    margin-bottom: 5px;
 }
 
-.submit{
-    width: 209px;
+.article strong{
+    color:rgb(131, 131, 131);
+}
+
+.section{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.createNews{
+    display: flex;
+    color:#9cadc2;
+    border:1px solid #00000000;
+    background: none;
+    font-size: 17px;
     height: 25px;
-    background-color: white;
+    cursor: pointer;
 }
-

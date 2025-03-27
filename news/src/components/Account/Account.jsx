@@ -1,57 +1,39 @@
 import classes from './Account.module.css';
-import { useState } from 'react';
+import {NavLink} from 'react-router-dom';
 
-export default function Account(){
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    rights: 'user',
-    phone:''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) =>{
-    e.preventDefault();
-
-    const response = await fetch('http://localhost:3000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData),
-    })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    
-  }
-
+export default function Account({userData}){
   return (
     <>
-      <form className={classes.form} onSubmit={handleSubmit}>
-        <label className={classes.label} >Псевдоним:</label>
-        <input className={classes.input} onChange={handleChange} name='name' type='text' minLength={8} maxLength={15} required/>
-        <label className={classes.label}>Почта:</label>
-        <input className={classes.input} onChange={handleChange} name='email' type='email' required/>
-        <label className={classes.label}>Пароль:</label>
-        <input className={classes.input} onChange={handleChange} name='password' type='password'  minLength={8} maxLength={30} required/>
-        <label className={classes.label} >Номер телефона:</label>
-        <input className={classes.input} onChange={handleChange} name='phone' type='tel'  minLength={11} maxLength={12} required/>
-        <label className={classes.label} >Права аккаунта:</label>
-        <select className={`${classes.input} ${classes.select}`} onChange={handleChange} name='rights'>
-          <option className={classes.label} value='user'>Пользователь</option>
-          <option className={classes.label} value='author'>Автор</option>
-          <option className={classes.label} value='admin'>Администратор</option>
-        </select>
-        <button className={classes.submit} type='submit'>Сохранить</button>
-      </form>
+      <h1 className={classes.h1}>Добро пожаловать, <strong>{userData.name}</strong>!</h1>
+      <article className={classes.article}>
+        <h3>Данные профиля:</h3>
+        <section className={classes.section}>
+          <p>Псевдоним: <strong>{userData.name}</strong></p>
+          <p>Почта:  <strong>{userData.email}</strong></p>
+          <p>Пароль: <strong>{userData.password}</strong></p>
+          <p>Авторские права: 
+            <strong>
+              {
+                userData.role == 'author' ? 
+                ' Присутствуют' :
+                ' Отсутствуют'
+              }
+            </strong>
+          </p>
+        </section>
+      </article>
+
+      {
+        userData.role == 'author' || userData.role == 'admin'? 
+        (<NavLink to='../createNews' className={classes.createNews}>Создать статью</NavLink>):
+        undefined
+      }
+
+      {
+        userData.role == 'admin' ? 
+        (<NavLink to='../adminPanel' className={classes.createNews}>Открыть админ панель</NavLink>):
+        undefined
+      }
     </>
   )
 };
