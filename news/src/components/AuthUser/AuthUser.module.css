@@ -40,7 +40,7 @@
 }
 
 .submit{
-    width: 209px;
+    width: 220px;
     height: 25px;
     background-color: white;
     color:black;
@@ -60,4 +60,3 @@
     height: 200px;
     overflow: auto;
 }
-
