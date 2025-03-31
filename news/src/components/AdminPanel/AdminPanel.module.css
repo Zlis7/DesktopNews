@@ -1,3 +1,45 @@
 .h1{
     color:white;
 }
+
+.titleForm{
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
+.optionProfile{
+    display: flex;
+    color:#9cadc2;
+    border:1px solid #00000000;
+    background: none;
+    font-size: 17px;
+    height: 25px;
+    cursor: pointer;
+    transition: 1.2s;
+}
+
+.optionProfile:hover{
+    font-size: 20px;
+}
+
+.horizontal{
+    display: flex;
+    gap: 30px;
+}
+
+.panelUser{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    margin-top: 20px;
+}
+
+.panelNews{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}

@@ -23,6 +23,10 @@
     flex-direction: column;
 }
 
+.section p{
+    width: 400px;
+}
+
 .optionProfile{
     display: flex;
     color:#9cadc2;
@@ -30,6 +34,7 @@
     background: none;
     font-size: 17px;
     height: 25px;
+    width: 300px;
     cursor: pointer;
     transition: 1.2s;
 }
@@ -42,6 +47,7 @@
     width: 120px;
     height: 120px;
     border-radius: 100%;
+    background-color: #99a9bd;
 }
 
 .titleForm{
@@ -49,4 +55,16 @@
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 40px;
+}
+
+.aboutRights{
+    display: none;
+    padding: 15px;
+    border: 1px solid rgb(151, 143, 143);
+}
+
+.underlinePopupWindow{
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #b46969;
 }

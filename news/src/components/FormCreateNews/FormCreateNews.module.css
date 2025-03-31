@@ -42,11 +42,12 @@
     width: 209px;
     height: 25px;
     background-color: white;
+    color:black;
 }
 
 .message{
     font-size: 20px;
-    color:#ff6363;
+    color:#69b46d;
     margin-top: 20px;
 }
 

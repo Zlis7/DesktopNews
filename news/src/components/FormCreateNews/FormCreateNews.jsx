@@ -4,36 +4,22 @@ import { ref, set, get, child} from "firebase/database";
 import { auth, database } from '../../firebase';
 
 export default function FormCreateNews(){
-  const [loading, setLoading] = useState(true);
-  const [messageSubmit, setMessageSubmit] = useState('');
-  const [newsDataForm, setNewsDataForm] = useState({
-      title: '',
-      urlImage: '',
-      content: '',
-      dataCreated: new Date().toDateString()
-  });
+  const [message, setMessage] = useState('');
+  const [newsDataForm, setNewsDataForm] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = () => {
-      getDataUserNewsFromDB();
-      setLoading(false); 
-    };
-  
-    return () => unsubscribe();
+    const getData = auth.onAuthStateChanged(user => {
+      if (user) {
+        getDataUserNewsFromDB(user.uid);
+      } else {
+        setMessage('Доступ запрещен!')
+      }
+    });
+
+    return () => getData();
     }, []
   );
-  
-  const getDataUserNewsFromDB = async() =>{
-    console.log(auth);
-    await get(child(ref(database), `users-news/${auth.currentUser.uid}`)).then((snapshot)=>{
-      if (snapshot.exists()) {
-        setNewsDataForm(snapshot.val());
-      } else {
-        setNewsDataForm({ title: '', urlImage: '', content: ''});
-      }
-    })
-  };
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewsDataForm({
@@ -41,34 +27,49 @@ export default function FormCreateNews(){
       [name]: value,
     });
   };
-
-  const handleSubmit = async (e) =>{
+  
+  const getDataUserNewsFromDB = async(uid) =>{
+    await get(child(ref(database), 'news-under-consideration/'+ uid)).then((snapshot)=>{
+      if (snapshot.exists()) {
+        setNewsDataForm(snapshot.val());
+        setMessage('Ваша статья в списке на рассмотрении, ожидайте ответа...');
+      } else {
+        setNewsDataForm({ title: '', urlImage: '', content: ''});
+      }
+    })
+  };
+  
+  const handleSubmit = async(e) =>{
     e.preventDefault();
 
-    await set(ref(database, 'news-users/' + auth.currentUser.uid), newsDataForm) 
-    .then(()=>setMessageSubmit('Новость была успешно отправленна на рассмотрение администрации!'))
-    .catch((error) => setMessageSubmit(error));
+    await set(ref(database, 'news-under-consideration/' + auth.currentUser.uid), {
+      ...newsDataForm,
+      dataLastChange: new Date().toDateString(),
+      isShow: false
+    }) 
+    .then(()=>setMessage('Статья была успешно отправленна на рассмотрение администрации!'))
+    .catch((error) => setMessage(error));
   };
 
-  if (loading){
+  if (!newsDataForm){
       return  <h2 className={classes.titleForm}>Загрузка ...</h2>
   }
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <label className={classes.label} htmlFor='title'>Заголовок:</label>
-      <input className={classes.input} onChange={handleChange} name='title' type='text' minLength={30} maxLength={70} required/>
+      <input className={classes.input} onChange={handleChange} value={newsDataForm.title} name='title' type='text' minLength={30} maxLength={70} required/>
       <label className={classes.label} htmlFor='urlImage'>URL фото новости:</label>
-      <input className={classes.input} onChange={handleChange} name='urlImage' type='text' required/>
+      <input className={classes.input} onChange={handleChange} value={newsDataForm.urlImage} name='urlImage' type='text' required/>
           
       <label className={classes.label} htmlFor='content'>Содержание:</label>
-      <textarea className={`${classes.input} ${classes.inputBig}`} onChange={handleChange} name='content' type='text' minLength={600} maxLength={4000} required/>
+      <textarea className={`${classes.input} ${classes.inputBig}`} onChange={handleChange} value={newsDataForm.content} name='content' type='text' minLength={600} maxLength={4000} required/>
             
       <button className={classes.submit} type='submit'>Отправить на рассмотрение</button>
     
       {
-        messageSubmit.length > 0 
-        ? <p className={classes.message}>{messageSubmit}</p>
+        message.length > 0 
+        ? <p className={classes.message}>{message}</p>
         : undefined
       }
     </form>

@@ -1,21 +1,27 @@
-import { useState } from "react";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
 import {HashRouter, Routes, Route} from 'react-router-dom';
+import Header from "../Header/Header";
+import HomeNews from '../HomeNews/HomeNews'
+import AuthUser from '../AuthUser/AuthUser';
+import FormCreateNews from '../FormCreateNews/FormCreateNews';
+import AdminPanel from '../AdminPanel/AdminPanel';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 export default function App(){
   return (
     <>
       <HashRouter>
         <Header />
-        <Routes>
-          <Route path='' element={<Main path='homeAll' />}  />
-          <Route path='homeAll' element={<Main path='homeAll' />} />
-          <Route path='homeApp' element={<Main path='homeApp' />}  />
-          <Route path='account' element={<Main path='account' />}  />
-          <Route path='createNews' element={<Main path='createNews' />}  />
-          <Route path='adminPanel' element={<Main path='adminPanel' />}  />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path='' element={<HomeNews/>}/>
+            <Route path='homeAll' element={<HomeNews/>}/>
+            <Route path='homeApp' element={<HomeNews/>}/>
+            <Route path='account' element={<AuthUser/>}/>
+            <Route path='createNews' element={<FormCreateNews/>}/>
+            <Route path='adminPanel' element={<AdminPanel/>}/>
+            <Route path='*' element={<PageNotFound/>}/>
+          </Routes>
+        </main>
       </HashRouter>
     </>
   )

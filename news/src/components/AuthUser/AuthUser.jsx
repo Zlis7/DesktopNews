@@ -82,7 +82,6 @@ export default function AuthUser(){
           age: userDataForm.age
         });
       })
-    .then(()=> location.reload())
     .catch((error)=> setErrorMessage(error.message));
   };
 

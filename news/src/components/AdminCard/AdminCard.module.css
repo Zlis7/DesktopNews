@@ -1,3 +1,62 @@
 .h1{
     color:white;
 }
+
+.userImage{
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    background-color: #99a9bd;
+}
+
+.article{
+    width: 300px;
+    padding: 30px;
+    background-color: #9cadc254;
+    flex: 0 1 calc(33.33% - 10px); 
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.articleNews{
+    width: 800px;
+    padding: 30px;
+    background-color: #9cadc254;
+    flex: 0 1 calc(33.33% - 10px); 
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.section{
+    margin-top: 25px;
+}
+
+.p{
+    color:rgb(131, 131, 131);
+}
+
+.pNews{
+    color:rgb(131, 131, 131);
+    max-height: 300px;
+    word-wrap: break-word;
+    overflow: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+
+.optionProfile{
+    display: flex;
+    color:#9cadc2;
+    border:1px solid #00000000;
+    background: none;
+    font-size: 17px;
+    height: 25px;
+    width: 300px;
+    cursor: pointer;
+    transition: 1.2s;
+}
+
+.optionProfile:hover{
+    font-size: 20px;
+}
