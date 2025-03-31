@@ -32,7 +32,6 @@ export default function FormCreateNews(){
     await get(child(ref(database), 'news-under-consideration/'+ uid)).then((snapshot)=>{
       if (snapshot.exists()) {
         setNewsDataForm(snapshot.val());
-        setMessage('Ваша статья в списке на рассмотрении, ожидайте ответа...');
       } else {
         setNewsDataForm({ title: '', urlImage: '', content: ''});
       }
@@ -45,7 +44,7 @@ export default function FormCreateNews(){
     await set(ref(database, 'news-under-consideration/' + auth.currentUser.uid), {
       ...newsDataForm,
       dataLastChange: new Date().toDateString(),
-      isShow: false
+      isShow: 'none'
     }) 
     .then(()=>setMessage('Статья была успешно отправленна на рассмотрение администрации!'))
     .catch((error) => setMessage(error));
@@ -68,9 +67,13 @@ export default function FormCreateNews(){
       <button className={classes.submit} type='submit'>Отправить на рассмотрение</button>
     
       {
-        message.length > 0 
-        ? <p className={classes.message}>{message}</p>
-        : undefined
+        message.length > 0 ?
+        <p className={classes.message}>Ваша статья в списке на рассмотрении, ожидайте ответа...</p>
+        : newsDataForm.isShow === 'none'
+        ? <p className={classes.message}>Ваша статья в списке на рассмотрении, ожидайте ответа...</p>
+        : newsDataForm.isShow === 'true'
+        ? <p className={classes.message}>Ваша статья была опубликована, спасибо!</p>
+        : <p className={classes.badMessage}>Ваша статья была отклонена</p>
       }
     </form>
   )

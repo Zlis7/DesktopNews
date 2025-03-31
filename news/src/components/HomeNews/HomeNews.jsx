@@ -16,10 +16,8 @@ export default function HomeNews(){
   }, []);
 
   const getDataNews = async() =>{
-    await get(child(ref(database), 'news-under-consideration/')).then((snapshot)=>{
-      if (snapshot.exists()) {
-        setDataNews(snapshot.val());
-      }
+    await get(child(ref(database), 'application-news/')).then((snapshot)=>{
+      setDataNews(snapshot.val());
     })
   };
 
@@ -27,13 +25,11 @@ export default function HomeNews(){
       return <h2 className={classes.titleForm}>Загрузка ...</h2>
   }
 
-  console.log(dataNews);
-
   return (
     <div className={classes.homeNews}>
       <CardNews isMinCardNews={false} dataNews={dataNews[0]} />
       <div className={classes.containerNews}>
-        {dataNews.slice(1).map((data) => <CardNews key={dataNews.title} isMinCardNews={true} dataNews={dataNews} /> )}
+        {dataNews.slice(1).map((data, index) => <CardNews key={index} isMinCardNews={true} dataNews={data} /> )}
       </div>
     </div>
   )

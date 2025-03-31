@@ -1,7 +1,6 @@
 import classes from './AdminCard.module.css';
 import { useState, useEffect } from 'react';
-import {signOut, deleteUser } from "firebase/auth";
-import { auth, database } from '../../firebase';
+import { database } from '../../firebase';
 import { ref, set, get, child} from "firebase/database";
 
 export default function AdminCard({newsData, userData}){
@@ -42,7 +41,7 @@ export default function AdminCard({newsData, userData}){
         uid: uid,
         disabled: isDisabled
       })
-      })
+    })
     .then(()=> e.target.style.color = '#69b46d')
     .catch(()=> e.target.style.color = '#b46969');
   }
@@ -66,18 +65,65 @@ export default function AdminCard({newsData, userData}){
     .catch(()=> e.target.style.color = '#b46969');
   }
 
+  const changePublicationStatusNews = async(e, newsData, isPublications) => {
+    e.target.onClick = ()=>{};
+    e.target.style.color = '#69b46d'
+
+    const authorID = newsData[0];
+    const data = newsData[1];
+    
+    await set(ref(database, 'news-under-consideration/' + authorID), {
+      content:data.content,
+      dataLastChange: data.dataLastChange,
+      isShow: isPublications,
+      title: data.title,
+      urlImage: data.urlImage
+    })
+    .catch(()=> e.target.style.color = '#b46969');
+
+    if (isPublications === 'false'){
+      return;
+    }
+
+    let userNameAndPhoto = []
+    await fetch(`http://localhost:3000/getNameAndPhotoUserByID?uid=${authorID}&apiKey=7dbd6be92a7faeebcc1395f9f8c5d19dc77c8340`, {
+      method: 'GET'
+    })
+    .then((response)=> response.json())
+    .then((data) => {
+      userNameAndPhoto = [data.userName, data.photoURL];
+    })
+    .catch(()=> e.target.style.color = '#b46969');
+ 
+    let numberLastNews = 0;
+    await get(child(ref(database), 'application-news/')).then((snapshot)=>{
+      numberLastNews = Object.keys(snapshot.val()).length;
+    })
+    .catch(()=> e.target.style.color = '#b46969');
+
+    await set(ref(database, 'application-news/' + numberLastNews), {
+      content:data.content,
+      dataLastChange: data.dataLastChange,
+      title: data.title,
+      urlImage: data.urlImage,
+      authorName: userNameAndPhoto[0],
+      authorImage: userNameAndPhoto[1]
+    })
+    .catch(()=> e.target.style.color = '#b46969');
+  }
+
   const showUserData = () =>{
     if (userDataDB === null){
       return (
         <article className={classes.article}>
-          <h3>Загрузка...</h3>
+          <h3 className={classes.h3}>Загрузка...</h3>
         </article>
       )
     }
 
     return (
       <article className={classes.article}>
-        <h3>{userData.uid}</h3>
+        <h3 className={classes.h3}>{userData.uid}</h3>
         <section className={classes.section}>
           <img src={userData.photoURL} className={classes.userImage}/>
           <p className={classes.p}>Псевдоним - {userData.displayName}</p>
@@ -88,7 +134,7 @@ export default function AdminCard({newsData, userData}){
 
         </section>
         <section className={classes.section}>
-          <h3>Опции:</h3>
+          <h3 className={classes.h3}>Опции:</h3>
           <section>
             <a className={classes.optionProfile} onClick={(e)=>{disabelUserByID(e, userData.uid, !userData.disabled)}}>Заблокировать/Разблокировать</a>
             <a className={classes.optionProfile} onClick={(e)=>{updateUserByID(e, userData.uid, userDataDB.age, 'user')}}>Выдать права пользователя</a>
@@ -96,11 +142,9 @@ export default function AdminCard({newsData, userData}){
             <a className={classes.optionProfile} onClick={(e)=>{updateUserByID(e, userData.uid, userDataDB.age, 'admin')}}>Выдать права администратора</a>
           </section>
         </section>
-
       </article>
     )
   }
-
 
   const showNewsData = () =>{
     const authorID = newsData[0];
@@ -108,18 +152,18 @@ export default function AdminCard({newsData, userData}){
 
     return (
       <article className={classes.articleNews}>
-        <h3>ID Автора - {authorID}</h3>
+        <h3 className={classes.h3}>ID Автора - {authorID}</h3>
         <section className={classes.section}>
-          <img src={newsData.urlImage} className={classes.userImage}/>
+          <img src={data.urlImage} className={classes.userImage}/>
           <p className={classes.p}>Заголовок - {data.title}</p>
           <p className={classes.pNews}>{data.content}</p>
           <p className={classes.p}>Дата последнего изменения - {data.dataLastChange}</p>
         </section>
         <section className={classes.section}>
-          <h3>Опции:</h3>
+          <h3 className={classes.h3}>Опции:</h3>
           <section>
-            <a className={classes.optionProfile} onClick={()=>{}}>Опубликовать</a>
-            <a className={classes.optionProfile} onClick={()=>{}}>Отклонить</a>
+            <a className={classes.optionProfile} onClick={(e)=>{changePublicationStatusNews(e,newsData, 'true')}}>Опубликовать</a>
+            <a className={classes.optionProfile} onClick={(e)=>{changePublicationStatusNews(e,newsData, 'false')}}>Отклонить</a>
           </section>
         </section>
       </article>

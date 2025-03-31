@@ -7,14 +7,14 @@ export default function CardNews({isMinCardNews, dataNews}){
       classes.minCardNews : classes.maxCardNews}
       >
 
-      <img src="images/temp.svg" alt="imageNews" />
+      <img className={`${isMinCardNews ? classes.smallImage : classes.bigImage}`} src={dataNews.urlImage}  />
       <div className={classes.infoCard}>
-        <p className={classes.darkishText}> {dataNews.date} </p>
+        <p className={classes.darkishText}> {dataNews.dataLastChange} </p>
         <h1 className={classes.lightishText}> {dataNews.title} </h1>
-        <p className={classes.darkishText}> {dataNews.contentNews} </p>
+        <p className={classes.darkishText}> {dataNews.content} </p>
         <div className={classes.infoAuthor}>
-          <img src="images/temp2.svg" alt="imageAuthor" />
-          <p className={classes.lightishText}> {dataNews.nameAuthor} </p>
+          <img className={classes.userImage} src={dataNews.authorImage} />
+          <p className={classes.lightishText}> {dataNews.authorName} </p>
         </div>
       </div>
     </div>

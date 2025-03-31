@@ -69,7 +69,9 @@ export default function AdminPanel(){
     return (
       <div className={classes.panelNews}>
         { 
-          underConsiderationNews.map((newsData, index)=>{
+          underConsiderationNews
+          .filter((newsData) => newsData[1].isShow === 'none')
+          .map((newsData, index)=>{
             return <AdminCard key={index} newsData={newsData} userData={null}/>
           })
         }
@@ -109,8 +111,6 @@ export default function AdminPanel(){
         : showPanel()
         }
       </div>
-
-       
     </>
   )
 };
