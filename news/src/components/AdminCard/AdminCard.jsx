@@ -10,12 +10,8 @@ export default function AdminCard({newsData, userData}){
     const getData = () => {
       if (newsData === null){
         getDataUserFromDB();
-      } else{
-
-      }
-      
-      };
-    
+      } 
+    };
       return () => getData();
     }, 
   []);
@@ -31,7 +27,7 @@ export default function AdminCard({newsData, userData}){
   const disabelUserByID = async(e, uid, isDisabled) => {
     e.target.onClick = ()=>{};
  
-    fetch('http://localhost:3000/disabelUserByID', {
+    fetch('https://simple-api-news.vercel.app/disabelUserByID', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -49,7 +45,7 @@ export default function AdminCard({newsData, userData}){
   const updateUserByID = async(e, uid, age, role) => {
     e.target.onClick = ()=>{};
  
-    fetch('http://localhost:3000/updateUserByID', {
+    fetch('https://simple-api-news.vercel.app/updateUserByID', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -86,7 +82,7 @@ export default function AdminCard({newsData, userData}){
     }
 
     let userNameAndPhoto = []
-    await fetch(`http://localhost:3000/getNameAndPhotoUserByID?uid=${authorID}&apiKey=7dbd6be92a7faeebcc1395f9f8c5d19dc77c8340`, {
+    await fetch(`https://simple-api-news.vercel.app/getNameAndPhotoUserByID?uid=${authorID}&apiKey=7dbd6be92a7faeebcc1395f9f8c5d19dc77c8340`, {
       method: 'GET'
     })
     .then((response)=> response.json())

@@ -18,16 +18,8 @@ const createWindow = () => {
   });
 
   mainWindow.setMenuBarVisibility(false);
-
-  //'http://localhost:5173'
-  //https://rutube.ru/
-  mainWindow.loadURL('http://localhost:5173');
-
-  // and load the index.html of the app.
-  //mainWindow.loadFile(path.join(__dirname, 'index.html'));
-
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

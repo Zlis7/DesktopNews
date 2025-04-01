@@ -1,7 +1,7 @@
 import classes from './AdminPanel.module.css';
 import { useState, useEffect } from 'react';
 import { auth, database } from '../../firebase';
-import { ref, set, get, child} from "firebase/database";
+import { ref, get, child} from "firebase/database";
 import AdminCard from '../AdminCard/AdminCard';
 
 export default function AdminPanel(){
@@ -28,7 +28,7 @@ export default function AdminPanel(){
   
   const getDataUsersByPageNumber = async(page) => {
     await fetch(
-      'http://localhost:3000/listAllUsersByPageNumber?'
+      'http://simple-api-news.vercel.app/listAllUsersByPageNumber?'
       + 'apiKey=7dbd6be92a7faeebcc1395f9f8c5d19dc77c8340'
       + '&'
       + `page=${page}`
