@@ -5,8 +5,9 @@
 
 .containerNews{
     display: flex;
-    gap: 2%;
+    gap: 40px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .titleForm{
