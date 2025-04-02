@@ -1,20 +1,20 @@
 import classes from './AdminCard.module.css';
 import { useState, useEffect } from 'react';
-import { database } from '../../firebase';
+import { auth, database } from '../../firebase';
 import { ref, set, get, child} from "firebase/database";
 
 export default function AdminCard({newsData, userData}){
   const [userDataDB, setUserDataDB] = useState(null);
 
   useEffect(() => {
-    const getData = () => {
-      if (newsData === null){
-        getDataUserFromDB();
-      } 
-    };
-      return () => getData();
-    }, 
-  []);
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      getDataUserFromDB();
+  });
+  
+  return () => {
+    unsubscribe();
+  };
+  }, []);
 
   const getDataUserFromDB = async() =>{
       await get(child(ref(database), `users/${userData.uid}`)).then((snapshot)=>{

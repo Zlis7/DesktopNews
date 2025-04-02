@@ -23,9 +23,11 @@ export default function AuthUser(){
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
       setLoading(false); 
-    });
+  });
 
-    return () => unsubscribe();
+  return () => {
+    unsubscribe();
+  };
   }, []);
 
   const handleClickChangeForm = () => {
@@ -50,7 +52,7 @@ export default function AuthUser(){
       userDataForm.email, 
       userDataForm.password
     )
-    .then(()=> location.reload())
+    .then(()=> window.location.reload())
     .catch((error)=> setErrorMessage(error.message));
   };
 

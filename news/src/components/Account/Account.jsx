@@ -9,12 +9,14 @@ export default function Account({accountData}){
   const [userDataDB, setUserDataDB] = useState(null);
 
   useEffect(() => {
-      const getData = () => {
-        getDataUserFromDB();
-      };
-  
-      return () => getData();
-    }, []);
+  const unsubscribe = auth.onAuthStateChanged(user => {
+    getDataUserFromDB()
+  });
+
+  return () => {
+    unsubscribe();
+  };
+  }, []);
 
   const handleLogout = async() => {
     await signOut(auth).then(() => location.reload());

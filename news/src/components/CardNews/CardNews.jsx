@@ -11,7 +11,7 @@ export default function CardNews({isMinCardNews, dataNews}){
       <div className= {classes.modalOverlay} onClick={(e) => { e.stopPropagation(); setIsModalOpen(false); }}>
         <div className={classes.modalContent}>
           <p className={classes.p}> {dataNews.dataLastChange} </p>
-          <h1 className={classes.h1}> {dataNews.title} </h1>
+          <h1 className={classes.hContant}> {dataNews.title} </h1>
           <div className={classes.infoAuthor}>
             <img className={classes.userImage} src={dataNews.authorImage} />
             <p className={classes.p}> {dataNews.authorName} </p>

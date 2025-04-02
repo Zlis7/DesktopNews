@@ -73,7 +73,9 @@ export default function FormCreateNews(){
         ? <p className={classes.message}>Ваша статья в списке на рассмотрении, ожидайте ответа...</p>
         : newsDataForm.isShow === 'true'
         ? <p className={classes.message}>Ваша статья была опубликована, спасибо!</p>
-        : <p className={classes.badMessage}>Ваша статья была отклонена</p>
+        : newsDataForm.isShow === 'false'
+        ? <p className={classes.badMessage}>Ваша статья была отклонена</p>
+        : undefined
       }
     </form>
   )

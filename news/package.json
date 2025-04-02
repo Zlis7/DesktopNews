@@ -3,7 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "types": "module",
-  "homepage": ".",
+  "homepage": "./",
+  "build": {
+    "files": [
+      "build/**/*",
+      "public/electron.js"
+    ]
+  },
   "scripts": {
     "start": "vite",
     "build": "vite build",
